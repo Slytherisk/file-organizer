@@ -1,12 +1,17 @@
 from pathlib import Path
 import shutil
 import os
-import re
+#import re
 
 list_file = os.listdir()
 for file in list_file:
-    if not(Path.is_dir(file)):
-        format = re.search(r"\.\w+$", file).group()
+    # Prevent incorrect behavior for dot-separated folder names
+    # For example: folder.name
+    if not Path.is_dir(file):
+        # format = re.search(r"\.\w+$", file).group()
+        # Another way to extract a file format, instead of line 11 & 12.
+        path = Path(file)
+        format = path.suffix
         match format:
             case ".jpg" | ".png" | ".jpeg":
                 try:
